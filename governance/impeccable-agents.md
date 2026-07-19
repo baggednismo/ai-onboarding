@@ -1,15 +1,4 @@
-# Impeccable Vendor Guidelines
-
-Vendor source: https://github.com/pbakaus/impeccable
-Vendor commit: e4ab5e24bdf5321b72163d2fbcbe6fa985c848ba
-Vendor release: 3.9.1
-License: Apache-2.0
-
-This file preserves the vendor's repository guidance for the imported skill
-payload. The canonical vendored runtime is `skills/impeccable/`; the upstream
-repository's build/site/test/install workflow is intentionally not imported.
-
-## Harness artifact policy
+# Harness artifact policy
 
 These repository rules take precedence over the upstream build-output
 locations described below:

@@ -32,6 +32,38 @@ Upstream skills retain Matt Pocock's buckets under `skills/engineering/`, `skill
 
 The wiki is the first place to look for durable project context. Keep it small and update it when shared rules or structure change.
 
+## Vendor quickstarts
+
+Ponytail — set the coding mode before work and change it only when needed:
+
+```text
+/ponytail full
+...work...
+/ponytail off
+```
+
+Impeccable — load project context, then run the smallest relevant UI command:
+
+```bash
+node .codex/skills/impeccable/scripts/context.mjs
+$impeccable audit
+```
+
+GPT Researcher — use the skill for integration guidance or run its MCP server:
+
+```text
+$gpt-researcher
+uvx gpt-researcher
+```
+
+AgentMemory — project the hooks, confirm the service, and approve changed hooks:
+
+```bash
+scripts/makesymlinks.sh
+agentmemory status
+curl -fsS http://localhost:3111/agentmemory/health
+```
+
 ## AgentMemory setup
 
 AgentMemory is an optional global memory service. It is deliberately not

@@ -9,6 +9,7 @@ This repository is the canonical source for one developer's reusable AI assets.
 - Read `governance/constitution.md` and `governance/AIBEHAVIOR.md` before meaningful changes.
 - Read `governance/ponytail-agents.md` when using Ponytail assets.
 - Read `governance/impeccable-agents.md` when using Impeccable assets.
+- Read `governance/gpt-researcher-agents.md` when using GPT Researcher assets.
 - Treat `governance/`, `skills/`, `agents/`, and `wiki/` as canonical shared roots.
 - Place generated text and files under `artifacts/`; use `artifacts/tickets/` for local tickets.
 - Search `wiki/` first for durable project context.
