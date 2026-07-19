@@ -34,34 +34,81 @@ The wiki is the first place to look for durable project context. Keep it small a
 
 ## Vendor quickstarts
 
-Ponytail — set the coding mode before work and change it only when needed:
+Run the sections top to bottom when a task uses multiple vendors; `#` comments define each command.
+
+### Ponytail
 
 ```text
-/ponytail full
-...work...
-/ponytail off
+scripts/makesymlinks.sh                 # Project the toolkit into Codex/Copilot roots.
+/ponytail full                          # Enforce minimal, stdlib-first implementation.
+/ponytail-review                        # Find over-engineering in the current diff.
+/ponytail-audit                         # Find over-engineering across the whole repo.
+/ponytail-debt                          # Collect deliberate ponytail shortcuts.
+/ponytail-gain                          # Show Ponytail's measured savings scoreboard.
+/ponytail-help                          # Show Ponytail modes and command reference.
+/ponytail off                           # End Ponytail mode for the session.
 ```
 
-Impeccable — load project context, then run the smallest relevant UI command:
+### GPT Researcher
 
 ```bash
-node .codex/skills/impeccable/scripts/context.mjs
-$impeccable audit
+codex --search                                      # Enable Codex-native live web search.
+$gpt-researcher                                     # Start plan → research → review → publish.
+mkdir -p artifacts/research/<slug>                  # Keep all research state in artifacts.
+
+# Planner: split the question into sections and source requirements.
+# Researcher agents: investigate sections and save raw.json source records.
+python skills/gpt-researcher/scripts/research_tools.py clean \
+  --input artifacts/research/<slug>/raw.json \
+  --output artifacts/research/<slug>/sources.json   # Normalize and deduplicate sources.
+python skills/gpt-researcher/scripts/research_tools.py context \
+  --input artifacts/research/<slug>/sources.json \
+  --output artifacts/research/<slug>/context.md \
+  --max-chars 24000                                 # Bound tokens before synthesis.
+
+# Fact-checker: challenge claims against sources; editor: write report.md.
+python skills/gpt-researcher/scripts/research_tools.py citations \
+  --input artifacts/research/<slug>/sources.json \
+  --output artifacts/research/<slug>/references.md   # Emit compact references.
 ```
 
-GPT Researcher — use the skill for integration guidance or run its MCP server:
+### Impeccable
 
 ```text
-$gpt-researcher
-uvx gpt-researcher
+node .codex/skills/impeccable/scripts/context.mjs # Load product/design context once.
+$impeccable init                        # Establish PRODUCT.md and DESIGN.md.
+$impeccable shape <feature>              # Plan a UI before coding.
+$impeccable craft <feature>              # Design and build a UI end to end.
+$impeccable critique <target>            # Review UX quality and heuristics.
+$impeccable audit <target>               # Check accessibility, performance, and responsiveness.
+$impeccable polish <target>              # Apply the final UI quality pass.
+$impeccable harden <target>              # Handle errors, edge cases, and i18n.
+$impeccable adapt <target>               # Make the UI work across device sizes.
+$impeccable optimize <target>            # Diagnose UI performance problems.
+$impeccable layout <target>              # Fix spacing and visual hierarchy.
+$impeccable typeset <target>             # Improve typography and font hierarchy.
+$impeccable colorize <target>            # Add a deliberate color strategy.
+$impeccable animate <target>             # Add purposeful motion.
+$impeccable clarify <target>             # Improve UX copy and error messages.
+$impeccable quieter <target>             # Reduce visual noise.
+$impeccable bolder <target>              # Increase visual emphasis.
+$impeccable distill <target>             # Remove unnecessary design complexity.
+$impeccable onboard <target>             # Improve first-run and empty states.
+$impeccable delight <target>             # Add personality and memorable details.
+$impeccable overdrive <target>           # Push the design beyond conventional patterns.
+$impeccable extract <target>             # Pull reusable tokens and components.
+$impeccable document                    # Generate DESIGN.md from existing code.
+$impeccable live                         # Explore browser-picked visual variants.
+$impeccable hooks status                 # Inspect the UI anti-pattern detector hook.
+$impeccable pin <command>                # Create a shortcut for a frequent command.
+$impeccable unpin <command>              # Remove an Impeccable shortcut.
 ```
 
-AgentMemory — project the hooks, confirm the service, and approve changed hooks:
+### AgentMemory
 
 ```bash
-scripts/makesymlinks.sh
-agentmemory status
-curl -fsS http://localhost:3111/agentmemory/health
+agentmemory status                       # Check the optional memory service.
+curl -fsS http://localhost:3111/agentmemory/health # Verify its local health endpoint.
 ```
 
 ## AgentMemory setup

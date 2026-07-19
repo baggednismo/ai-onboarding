@@ -1,8 +1,3 @@
 {
-  "mcpServers": {
-    "gpt-researcher": {
-      "command": "uvx",
-      "args": ["gpt-researcher"]
-    }
-  }
+  "mcpServers": {}
 }

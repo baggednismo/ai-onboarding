@@ -48,7 +48,6 @@ replace_codex_path() {
 }
 
 replace_codex_path "$SOURCE/AGENTS_SOURCE.md" "$CODEX_TARGET/AGENTS.md"
-replace_codex_path "$SOURCE/agents" "$CODEX_TARGET/agents"
 replace_codex_path "$SOURCE/governance" "$CODEX_TARGET/governance"
 replace_codex_path "$SOURCE/skills" "$CODEX_TARGET/skills"
 replace_codex_path "$SOURCE/hooks" "$CODEX_TARGET/hooks"
@@ -56,6 +55,28 @@ replace_codex_path "$SOURCE/hooks/hooks.json" "$CODEX_TARGET/hooks.json"
 replace_codex_path "$SOURCE/wiki" "$CODEX_TARGET/wiki"
 replace_codex_path "$SOURCE/mcp-config.json" "$CODEX_TARGET/mcp-config.json"
 replace_codex_path "$SOURCE/CODEX-RULES.md" "$CODEX_TARGET/CODEX-RULES.md"
+
+# Codex discovers standalone agent TOMLs directly under ~/.codex/agents.
+# Keep vendor agents grouped in the canonical repository, then project their
+# files at the discovered root without duplicating their contents here.
+CODEX_AGENTS_TARGET="$CODEX_TARGET/agents"
+CODEX_AGENTS_MARKER="$CODEX_AGENTS_TARGET/.ai-onboarding-managed"
+if [ -L "$CODEX_AGENTS_TARGET" ]; then
+  rm -f "$CODEX_AGENTS_TARGET"
+elif [ -e "$CODEX_AGENTS_TARGET" ] && [ ! -f "$CODEX_AGENTS_MARKER" ]; then
+  mkdir -p "$CODEX_BACKUP"
+  mv "$CODEX_AGENTS_TARGET" "$CODEX_BACKUP/agents"
+fi
+mkdir -p "$CODEX_AGENTS_TARGET"
+touch "$CODEX_AGENTS_MARKER"
+
+# Remove stale generated links from an earlier projection shape. The marker
+# means this directory was created by this script, not supplied by the user.
+find "$CODEX_AGENTS_TARGET" -mindepth 1 -maxdepth 1 -type l -exec rm -f {} +
+
+while IFS= read -r -d '' agent_file; do
+  link_file "$agent_file" "$CODEX_AGENTS_TARGET/$(basename "$agent_file")"
+done < <(find "$SOURCE/agents" -mindepth 2 -maxdepth 2 -type f -name '*.toml' -print0)
 
 # AgentMemory is installed globally and is intentionally not vendored. On
 # macOS, expose the repository-owned LaunchAgent so it starts at login and

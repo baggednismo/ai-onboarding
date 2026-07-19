@@ -113,19 +113,18 @@ Node fallback or an explicit `IMPECCABLE_NODE` path is required.
 
 ## GPT Researcher Codex behavior
 
-GPT Researcher is vendored from `assafelovic/gpt-researcher` at commit
-`5d84d2f5553e70a2765a8ff3a0d2672d60437ce8` (2026-07-14), under Apache-2.0.
-Its skill and references live under `skills/gpt-researcher/`; it adds no
-hooks or agents. The upstream Codex plugin metadata is retained as
-`governance/gpt-researcher-agents.md` rather than installed as a separate
-plugin.
+GPT Researcher is remastered as a Codex-native pack under
+`skills/gpt-researcher/`, with custom agents under `agents/gpt-researcher/`.
+`scripts/makesymlinks.sh` projects those TOML files directly into the Codex
+agents root for discovery. The agents use the parent Codex session's available
+web/internet tools and write research artifacts under `artifacts/`. The bundled
+`research_tools.py` script only cleans, deduplicates, bounds, and formats text;
+it never calls an LLM.
 
-The canonical `mcp-config.json` registers the `gpt-researcher` server as
-`uvx gpt-researcher`. The symlink script exposes that mapping at
-`~/.codex/mcp-config.json`. `uvx` must resolve in both CLI and Desktop
-environments, and the package may require provider API credentials. Review
-the MCP configuration and trust/approve the server according to the active
-Codex/Desktop MCP controls before use.
+The canonical `mcp-config.json` deliberately contains no GPT Researcher
+server. Do not add provider API keys or enable the upstream `.mcp.json` for
+this workflow. If native web access is unavailable in a Codex surface, report
+that limitation rather than silently switching to an external retriever.
 
 ## AgentMemory external integration
 
