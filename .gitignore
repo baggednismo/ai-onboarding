@@ -1,0 +1,7 @@
+user-stories/
+issues/
+/research/
+__pycache__/
+*.pyc
+skills/.system/
+artifacts/

@@ -1,0 +1,26 @@
+{
+  "_comment": "Reference template for Qoder. This repository's Codex linker does not install or use Qoder configuration.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node PONYTAIL_DIR/hooks/ponytail-mode-tracker.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "task|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node PONYTAIL_DIR/hooks/ponytail-subagent.js"
+          }
+        ]
+      }
+    ]
+  }
+}

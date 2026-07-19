@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 node \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-activate.js\"",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-activate.js')",
+            "timeout": 5,
+            "statusMessage": "Loading ponytail mode..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 node \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-subagent.js\"",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-subagent.js')",
+            "timeout": 5,
+            "statusMessage": "Loading ponytail mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 node \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-mode-tracker.js\"",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-mode-tracker.js')",
+            "timeout": 5,
+            "statusMessage": "Tracking ponytail mode..."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+filters:
+  and:
+    - file.inFolder("notes/projects")
+    - type == "project"
+views:
+  - type: table
+    name: Projects
+    order:
+      - title
+      - status
+      - updated

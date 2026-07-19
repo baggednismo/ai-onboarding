@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vendor Skill Pack"
+  short_description: "Vendor and wire complete skill packs"
+  default_prompt: "Use $vendor-skills to import and wire a complete external skill pack into the canonical harness."

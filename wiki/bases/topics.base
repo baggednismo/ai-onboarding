@@ -1,0 +1,11 @@
+filters:
+  and:
+    - file.inFolder("notes/topics")
+    - type == "topic"
+views:
+  - type: table
+    name: Topics
+    order:
+      - title
+      - status
+      - updated

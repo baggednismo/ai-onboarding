@@ -1,0 +1,125 @@
+{
+  "description": "Canonical Codex hook aggregate for vendored harness integrations.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 bash \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-node.sh\" ponytail-activate.js",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; if (Get-Command node -ErrorAction SilentlyContinue) { $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-activate.js') }",
+            "timeout": 5,
+            "statusMessage": "Loading ponytail mode..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" session-start.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: loading session context"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 bash \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-node.sh\" ponytail-subagent.js",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; if (Get-Command node -ErrorAction SilentlyContinue) { $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-subagent.js') }",
+            "timeout": 5,
+            "statusMessage": "Loading ponytail mode..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|Read|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" pre-tool-use.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: enriching tool context"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PONYTAIL_CODEX=1 bash \"${CODEX_HOME:-$HOME/.codex}/hooks/ponytail/ponytail-node.sh\" ponytail-mode-tracker.js",
+            "commandWindows": "$root = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }; if (Get-Command node -ErrorAction SilentlyContinue) { $env:PONYTAIL_CODEX='1'; node (Join-Path $root 'hooks\\ponytail\\ponytail-mode-tracker.js') }",
+            "timeout": 5,
+            "statusMessage": "Tracking ponytail mode..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" prompt-submit.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: recalling relevant memories"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/impeccable/impeccable-node.sh\"",
+            "timeout": 5,
+            "statusMessage": "Checking UI changes"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" post-tool-use.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: recording tool result"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" pre-compact.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: preparing compaction context"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CODEX_HOME:-$HOME/.codex}/hooks/agentmemory-node.sh\" stop.mjs",
+            "timeout": 5,
+            "statusMessage": "agentmemory: saving session memory"
+          }
+        ]
+      }
+    ]
+  }
+}

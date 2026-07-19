@@ -1,0 +1,11 @@
+filters:
+  and:
+    - file.inFolder("notes/sources")
+    - type == "source"
+views:
+  - type: table
+    name: Sources
+    order:
+      - title
+      - status
+      - updated
