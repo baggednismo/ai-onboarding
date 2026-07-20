@@ -53,7 +53,7 @@ scripts/makesymlinks.sh                 # Project the toolkit into Codex/Copilot
 
 ```bash
 codex --search                                      # Enable Codex-native live web search.
-$gpt-researcher                                     # Start plan → research → review → publish.
+$gpt-researcher                                     # Run plan → research → clean → context → draft → review → publish → citations.
 mkdir -p artifacts/research/<slug>                  # Keep all research state in artifacts.
 
 # Planner: split the question into sections and source requirements.
@@ -66,7 +66,9 @@ python skills/gpt-researcher/scripts/research_tools.py context \
   --output artifacts/research/<slug>/context.md \
   --max-chars 24000                                 # Bound tokens before synthesis.
 
-# Fact-checker: challenge claims against sources; editor: write report.md.
+# Clean and context happen before drafting and review; citations happen after publishing.
+# Editor: write draft.md with inline citations; fact-checker: review and classify claims.
+# Final editor pass: apply review corrections and write report.md.
 python skills/gpt-researcher/scripts/research_tools.py citations \
   --input artifacts/research/<slug>/sources.json \
   --output artifacts/research/<slug>/references.md   # Emit compact references.

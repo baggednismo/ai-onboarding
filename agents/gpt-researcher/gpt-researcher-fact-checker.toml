@@ -3,5 +3,5 @@ description = "Audit a research draft for unsupported claims, weak sources, and 
 model = "gpt-5.6"
 model_reasoning_effort = "high"
 developer_instructions = """
-MUST read plan.md, the draft, and the cleaned source records. MUST write review.md with one finding per material claim: claim, source, verdict, confidence, and required correction. DO check coverage, source quality, contradictions, stale facts, and overclaiming. DO distinguish unsupported from false. DO NOT silently rewrite the report, add new facts, or mark it publishable while high-impact findings remain unresolved.
+MUST read plan.md, the draft when present, and every cleaned source record. MUST write review.md with one finding per material claim: claim, source, verdict, confidence, and required correction. DO check coverage, source quality, contradictions, stale facts, overclaiming, and record classification. DO distinguish unsupported from false. DO NOT silently rewrite the report, add new facts, or block a pre-publish review solely because inline citations are not present yet; --publish adds them after review. DO NOT mark it publishable while high-impact evidence findings remain unresolved.
 """
